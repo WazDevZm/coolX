@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zambia Farmer AI - Market Access & Crop Recommendation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2E7D32;
+            --primary-light: #4CAF50;
+            --secondary: #FF9800;
+            --secondary-light: #FFC107;
+            --dark: #1B5E20;
+            --light: #E8F5E9;
+            --gray: #f5f5f5;
+            --dark-gray: #555;
+            --text: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text);
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        .logo h1 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-size: 24px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--secondary-light);
+        }
+        
+        .hero {
+            background: url('https://images.unsplash.com/photo-1625246335526-871adb42c1a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80') no-repeat center center/cover;
+            padding: 80px 0;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .hero-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-2px);
+        }
+        
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--dark);
+            font-family: 'Roboto', sans-serif;
+            font-size: 2.2rem;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-family: 'Roboto', sans-serif;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .dashboard {
+            padding: 80px 0;
+            background-color: var(--gray);
+        }
+        
+        .dashboard-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 10px;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            background-color: var(--light);
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--light);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .results h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .price-table th, .price-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .price-table th {
+            background-color: var(--primary-light);
+            color: white;
+        }
+        
+        .price-table tr:hover {
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+        
+        .chart-container {
+            margin-top: 30px;
+            position: relative;
+            height: 300px;
+        }
+        
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: var(--light);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-section a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-section a:hover {
+            color: var(--secondary-light);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .dashboard-tabs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-seedling"></i>
+                    <h1>Zambia Farmer AI</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>AI-Powered Market Access for Zambian Farmers</h2>
+                <p>Get real-time market prices, crop recommendations, and profit forecasts to maximize your agricultural income</p>
+                <a href="#dashboard" class="btn">Get Started</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Real-Time Market Prices</h3>
+                    <p>Access current prices across Zambian and neighboring countries' markets to sell at the best price</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Crop Recommendations</h3>
+                    <p>Get AI-powered suggestions on the most profitable crops to plant based on season and market demand</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Profit Forecasting</h3>
+                    <p>Predict your potential profits before planting based on yield estimates and market trends</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="dashboard" id="dashboard">
+        <div class="container">
+            <h2 class="section-title">Farmer Dashboard</h2>
+            
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="market-prices">Market Prices</button>
+                <button class="tab-btn" data-tab="crop-recommendation">Crop Recommendation</button>
+                <button class="tab-btn" data-tab="profit-forecast">Profit Forecast</button>
+            </div>
+            
+            <div class="tab-content active" id="market-prices">
+                <div class="form-container">
+                    <h3>Check Current Market Prices</h3>
+                    <div class="form-group">
+                        <label for="crop-select">Select Crop:</label>
+                        <select id="crop-select">
+                            <option value="maize">Maize</option>
+                            <option value="tomatoes">Tomatoes</option>
+                            <option value="onions">Onions</option>
+                            <option value="beans">Beans</option>
+                            <option value="groundnuts">Groundnuts</option>
+                        </select>
+                    </div>
+                    <button class="btn" id="check-prices-btn">Check Prices</button>
+                    
+                    <div class="results" id="price-results">
+                        <h3>Current Prices for <span id="crop-name">Maize</span></h3>
+                        <table class="price-table">
+                            <thead>
+                                <tr>
+                                    <th>Market</th>
+                                    <th>Price (ZMW per kg)</th>
+                                    <th>Trend</th>
+                                </tr>
+                            </thead>
+                            <tbody id="price-table-body">
+                                <!-- Prices will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                        
+                        <div class="chart-container">
+                            <canvas id="price-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="crop-recommendation">
+                <div class="form-container">
+                    <h3>Get Crop Recommendations</h3>
+                    <div class="form-group">
+                        <label for="district">Your District:</label>
+                        <select id="district">
+                            <option value="kasumbalesa">Kasumbalesa</option>
+                            <option value="lusaka">Lusaka</option>
+                            <option value="ndola">Ndola</option>
+                            <option value="kitwe">Kitwe</option>
+                            <option value="livingstone">Livingstone</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="land-size">Land Size (hectares):</label>
+                        <input type="number" id="land-size" min="0.1" step="0.1" value="1.0">
+                    </div>
+                    <div class="form-group">
+                        <label for="season">Season:</label>
+                        <select id="season">
+                            <option value="rainy">Rainy Season</option>
+                            <option value="dry">Dry Season</option>
+                        </select>
+                    </div>
+                    <button class="btn" id="get-recommendations-btn">Get Recommendations</button>
+                    
+                    <div class="results" id="recommendation-results">
+                        <h3>Recommended Crops for Your Farm</h3>
+                        <div id="recommendation-list">
+                            <!-- Recommendations will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="profit-forecast">
+                <div class="form-container">
+                    <h3>Profit Forecast</h3>
+                    <div class="form-group">
+                        <label for="forecast-crop">Select Crop:</label>
+                        <select id="forecast-crop">
+                            <option value="maize">Maize</option>
+                            <option value="tomatoes">Tomatoes</option>
+                            <option value="onions">Onions</option>
+                            <option value="beans">Beans</option>
+                            <option value="groundnuts">Groundnuts</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="forecast-land">Land Size (hectares):</label>
+                        <input type="number" id="forecast-land" min="0.1" step="0.1" value="1.0">
+                    </div>
+                    <button class="btn" id="get-forecast-btn">Get Forecast</button>
+                    
+                    <div class="results" id="forecast-results">
+                        <h3>Profit Forecast for <span id="forecast-crop-name">Maize</span></h3>
+                        <div id="forecast-details">
+                            <!-- Forecast details will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="chart-container">
+                            <canvas id="forecast-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Success Stories</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"This AI system helped me realize that groundnuts would be more profitable than maize in the rainy season. I followed the advice and increased my profits by 40%!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JM</div>
+                        <div>
+                            <h4>John Mwila</h4>
+                            <p>Farmer, Kasumbalesa</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"I used to sell my tomatoes at the local market without knowing better prices elsewhere. Now I check the app and sell where I get the best return. My income has doubled!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AK</div>
+                        <div>
+                            <h4>Anna Kabwe</h4>
+                            <p>Farmer, Lusaka</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"The profit forecasting feature helped me secure a loan from the bank. I could show them exactly how much I expected to make from my bean harvest."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">PB</div>
+                        <div>
+                            <h4>Peter Banda</h4>
+                            <p>Farmer, Ndola</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Zambia Farmer AI</h3>
+                    <p>Empowering Zambian farmers with AI-driven market insights and crop recommendations.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#dashboard">Dashboard</a></li>
+                        <li><a href="#testimonials">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +260 123 456 789</li>
+                        <li><i class="fas fa-envelope"></i> info@zambiafarmerai.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Lusaka, Zambia</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Zambia Farmer AI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // Update active tab button
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Update active tab content
+                tabContents.forEach(content => content.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // Market Prices functionality
+        const cropSelect = document.getElementById('crop-select');
+        const checkPricesBtn = document.getElementById('check-prices-btn');
+        const priceResults = document.getElementById('price-results');
+        const cropName = document.getElementById('crop-name');
+        const priceTableBody = document.getElementById('price-table-body');
+        
+        // Sample market data
+        const marketData = {
+            maize: [
+                { market: 'Kasumbalesa (ZM-DRC Border)', price: 8.5, trend: 'up' },
+                { market: 'Lusaka', price: 9.2, trend: 'up' },
+                { market: 'Ndola', price: 8.8, trend: 'stable' },
+                { market: 'Kitwe', price: 8.7, trend: 'down' },
+                { market: 'Lubumbashi (DRC)', price: 12.5, trend: 'up' }
+            ],
+            tomatoes: [
+                { market: 'Kasumbalesa (ZM-DRC Border)', price: 15.2, trend: 'stable' },
+                { market: 'Lusaka', price: 12.8, trend: 'up' },
+                { market: 'Ndola', price: 13.5, trend: 'down' },
+                { market: 'Kitwe', price: 14.1, trend: 'up' },
+                { market: 'Lubumbashi (DRC)', price: 18.7, trend: 'up' }
+            ],
+            onions: [
+                { market: 'Kasumbalesa (ZM-DRC Border)', price: 10.5, trend: 'up' },
+                { market: 'Lusaka', price: 9.8, trend: 'stable' },
+                { market: 'Ndola', price: 10.2, trend: 'up' },
+                { market: 'Kitwe', price: 9.9, trend: 'down' },
+                { market: 'Lubumbashi (DRC)', price: 14.3, trend: 'up' }
+            ],
+            beans: [
+                { market: 'Kasumbalesa (ZM-DRC Border)', price: 12.7, trend: 'stable' },
+                { market: 'Lusaka', price: 11.9, trend: 'up' },
+                { market: 'Ndola', price: 12.3, trend: 'up' },
+                { market: 'Kitwe', price: 12.1, trend: 'stable' },
+                { market: 'Lubumbashi (DRC)', price: 16.8, trend: 'up' }
+            ],
+            groundnuts: [
+                { market: 'Kasumbalesa (ZM-DRC Border)', price: 14.2, trend: 'up' },
+                { market: 'Lusaka', price: 13.5, trend: 'up' },
+                { market: 'Ndola', price: 13.8, trend: 'stable' },
+                { market: 'Kitwe', price: 13.6, trend: 'down' },
+                { market: 'Lubumbashi (DRC)', price: 19.4, trend: 'up' }
+            ]
+        };
+        
+        checkPricesBtn.addEventListener('click', () => {
+            const selectedCrop = cropSelect.value;
+            const data = marketData[selectedCrop];
+            
+            // Update crop name
+            cropName.textContent = selectedCrop.charAt(0).toUpperCase() + selectedCrop.slice(1);
+            
+            // Clear previous table data
+            priceTableBody.innerHTML = '';
+            
+            // Populate table with new data
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                
+                const trendIcon = item.trend === 'up' ? '↗' : (item.trend === 'down' ? '↘' : '→');
+                const trendClass = item.trend === 'up' ? 'trend-up' : (item.trend === 'down' ? 'trend-down' : 'trend-stable');
+                
+                row.innerHTML = `
+                    <td>${item.market}</td>
+                    <td>ZMW ${item.price.toFixed(2)}</td>
+                    <td class="${trendClass}">${trendIcon}</td>
+                `;
+                
+                priceTableBody.appendChild(row);
+            });
+            
+            // Show results
+            priceResults.style.display = 'block';
+            
+            // Create or update chart
+            updatePriceChart(data, selectedCrop);
+        });
+        
+        function updatePriceChart(data, crop) {
+            const ctx = document.getElementById('price-chart').getContext('2d');
+            
+            // Destroy previous chart if it exists
+            if (window.priceChart) {
+                window.priceChart.destroy();
+            }
+            
+            // Create new chart
+            window.priceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(item => item.market),
+                    datasets: [{
+                        label: `Price (ZMW per kg) for ${crop}`,
+                        data: data.map(item => item.price),
+                        backgroundColor: [
+                            'rgba(46, 125, 50, 0.7)',
+                            'rgba(76, 175, 80, 0.7)',
+                            'rgba(255, 152, 0, 0.7)',
+                            'rgba(255, 193, 7, 0.7)',
+                            'rgba(27, 94, 32, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgb(46, 125, 50)',
+                            'rgb(76, 175, 80)',
+                            'rgb(255, 152, 0)',
+                            'rgb(255, 193, 7)',
+                            'rgb(27, 94, 32)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Price (ZMW per kg)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Crop Recommendation functionality
+        const getRecommendationsBtn = document.getElementById('get-recommendations-btn');
+        const recommendationResults = document.getElementById('recommendation-results');
+        const recommendationList = document.getElementById('recommendation-list');
+        
+        // Sample recommendation data
+        const recommendationData = {
+            kasumbalesa: {
+                rainy: [
+                    { crop: 'Groundnuts', profit: 12500, reason: 'High demand in DRC market with good prices' },
+                    { crop: 'Beans', profit: 9800, reason: 'Stable market with consistent prices' },
+                    { crop: 'Maize', profit: 7600, reason: 'Oversupply in local market, lower prices' }
+                ],
+                dry: [
+                    { crop: 'Tomatoes', profit: 15200, reason: 'High prices due to limited supply in dry season' },
+                    { crop: 'Onions', profit: 11800, reason: 'Consistent demand with good returns' },
+                    { crop: 'Beans', profit: 9200, reason: 'Reliable market with stable prices' }
+                ]
+            },
+            lusaka: {
+                rainy: [
+                    { crop: 'Maize', profit: 8900, reason: 'Government subsidies and stable market' },
+                    { crop: 'Beans', profit: 10200, reason: 'High urban demand with good prices' },
+                    { crop: 'Groundnuts', profit: 11000, reason: 'Growing demand from processing companies' }
+                ],
+                dry: [
+                    { crop: 'Tomatoes', profit: 14500, reason: 'High demand from urban markets' },
+                    { crop: 'Green vegetables', profit: 13200, reason: 'Short supply in dry season increases prices' },
+                    { crop: 'Onions', profit: 10500, reason: 'Consistent demand throughout the year' }
+                ]
+            },
+            // Add data for other districts...
+        };
+        
+        getRecommendationsBtn.addEventListener('click', () => {
+            const district = document.getElementById('district').value;
+            const landSize = parseFloat(document.getElementById('land-size').value);
+            const season = document.getElementById('season').value;
+            
+            // Get recommendations based on inputs
+            const recommendations = recommendationData[district][season];
+            
+            // Clear previous recommendations
+            recommendationList.innerHTML = '';
+            
+            // Populate recommendations
+            recommendations.forEach((rec, index) => {
+                const profit = (rec.profit * landSize).toLocaleString();
+                
+                const recElement = document.createElement('div');
+                recElement.classList.add('recommendation-item');
+                recElement.innerHTML = `
+                    <h4>${index + 1}. ${rec.crop}</h4>
+                    <p><strong>Estimated Profit:</strong> ZMW ${profit}</p>
+                    <p><strong>Why:</strong> ${rec.reason}</p>
+                `;
+                
+                recommendationList.appendChild(recElement);
+            });
+            
+            // Show results
+            recommendationResults.style.display = 'block';
+        });
+        
+        // Profit Forecast functionality
+        const getForecastBtn = document.getElementById('get-forecast-btn');
+        const forecastResults = document.getElementById('forecast-results');
+        const forecastCropName = document.getElementById('forecast-crop-name');
+        const forecastDetails = document.getElementById('forecast-details');
+        
+        // Sample forecast data
+        const forecastData = {
+            maize: {
+                yield: 2500, // kg per hectare
+                cost: 4500, // ZMW per hectare
+                prices: [8.5, 8.7, 9.0, 9.2, 9.5, 9.8] // Price trend over 6 months
+            },
+            tomatoes: {
+                yield: 8000, // kg per hectare
+                cost: 7200, // ZMW per hectare
+                prices: [12.5, 13.2, 14.0, 15.1, 16.5, 18.0] // Price trend over 6 months
+            },
+            onions: {
+                yield: 5000, // kg per hectare
+                cost: 5800, // ZMW per hectare
+                prices: [9.8, 10.2, 10.5, 10.8, 11.2, 11.5] // Price trend over 6 months
+            },
+            beans: {
+                yield: 1800, // kg per hectare
+                cost: 3800, // ZMW per hectare
+                prices: [11.9, 12.3, 12.8, 13.2, 13.7, 14.2] // Price trend over 6 months
+            },
+            groundnuts: {
+                yield: 2200, // kg per hectare
+                cost: 5200, // ZMW per hectare
+                prices: [13.5, 14.0, 14.6, 15.2, 15.9, 16.5] // Price trend over 6 months
+            }
+        };
+        
+        getForecastBtn.addEventListener('click', () => {
+            const crop = document.getElementById('forecast-crop').value;
+            const landSize = parseFloat(document.getElementById('forecast-land').value);
+            
+            const data = forecastData[crop];
+            
+            // Update crop name
+            forecastCropName.textContent = crop.charAt(0).toUpperCase() + crop.slice(1);
+            
+            // Calculate forecast
+            const totalYield = data.yield * landSize;
+            const totalCost = data.cost * landSize;
+            const avgPrice = data.prices.reduce((sum, price) => sum + price, 0) / data.prices.length;
+            const totalRevenue = totalYield * avgPrice;
+            const netProfit = totalRevenue - totalCost;
+            
+            // Display forecast details
+            forecastDetails.innerHTML = `
+                <p><strong>Estimated Yield:</strong> ${totalYield.toLocaleString()} kg</p>
+                <p><strong>Estimated Production Cost:</strong> ZMW ${totalCost.toLocaleString()}</p>
+                <p><strong>Average Expected Price:</strong> ZMW ${avgPrice.toFixed(2)} per kg</p>
+                <p><strong>Expected Revenue:</strong> ZMW ${totalRevenue.toLocaleString()}</p>
+                <p><strong>Net Profit:</strong> ZMW ${netProfit.toLocaleString()}</p>
+            `;
+            
+            // Show results
+            forecastResults.style.display = 'block';
+            
+            // Create or update forecast chart
+            updateForecastChart(data, crop, landSize);
+        });
+        
+        function updateForecastChart(data, crop, landSize) {
+            const ctx = document.getElementById('forecast-chart').getContext('2d');
+            
+            // Destroy previous chart if it exists
+            if (window.forecastChart) {
+                window.forecastChart.destroy();
+            }
+            
+            // Prepare data for chart
+            const months = ['Month 1', 'Month 2', 'Month 3', 'Month 4', 'Month 5', 'Month 6'];
+            const revenueData = data.prices.map(price => price * data.yield * landSize);
+            
+            // Create new chart
+            window.forecastChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [
+                        {
+                            label: 'Expected Revenue (ZMW)',
+                            data: revenueData,
+                            borderColor: 'rgb(76, 175, 80)',
+                            backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: 'Production Cost (ZMW)',
+                            data: Array(6).fill(data.cost * landSize),
+                            borderColor: 'rgb(255, 152, 0)',
+                            backgroundColor: 'rgba(255, 152, 0, 0.1)',
+                            borderDash: [5, 5],
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Zambian Kwacha (ZMW)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize with some data
+        document.addEventListener('DOMContentLoaded', () => {
+            // Trigger market prices for maize by default
+            checkPricesBtn.click();
+        });
+    </script>
+</body>
+</html>
