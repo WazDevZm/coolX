@@ -17,3 +17,5 @@ I am making a big commitment to remain on a full contribution streak on GitHub u
 Let's keep the streak going strong!
 # coolX
 building cool stuff for the long vacation with my mates :)
+We are building and scaling this year 2025 :)
+By the way, I am currently seeking  any open internship roles!
