@@ -6,6 +6,7 @@ using namespace std;
 
 int main(){
     cout<<"Hello Leetcode"<<endl;
+    cout<<" leet code is very cool, ake you thin like a genius";
 
 
 
