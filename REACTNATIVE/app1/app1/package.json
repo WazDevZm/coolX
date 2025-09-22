@@ -1,4 +1,5 @@
 {
+  "main": "App.tsx",
   "dependencies": {
     "expo": "^54.0.1",
     "react": "19.1.0",
@@ -14,5 +15,10 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.10",
+    "@types/react-native": "^0.73.0",
+    "typescript": "~5.9.2"
   }
 }
