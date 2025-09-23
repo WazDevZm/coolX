@@ -2,7 +2,9 @@
 
 ---
 
-![GitHub Logo](https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png)
+<div align="center">
+	<img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub Logo" width="64" height="64" />
+</div>
 
 ![Contribution Graph](https://ghchart.rshah.org/2196f3/WazDevZm)
 
