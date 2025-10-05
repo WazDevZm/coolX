@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-10-02T19:47:18.796629",
+  "total_detections": 0,
+  "safety_violations": 1,
+  "equipment_alerts": [],
+  "environmental_alerts": 0,
+  "ore_value_estimate": 0,
+  "detections": [],
+  "violations": [
+    {
+      "timestamp": "2025-10-02T19:46:40.493858",
+      "type": "No Helmet",
+      "position": [
+        
