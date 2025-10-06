@@ -1,0 +1,236 @@
+/* LinkedIn Connection Filter Content Script Styles */
+#linkedin-filter-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e1e5e9;
+    max-width: 320px;
+    animation: slideInRight 0.3s ease;
+}
+
+.filter-controls {
+    padding: 20px;
+}
+
+.filter-controls h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-controls h3::before {
+    content: '🔗';
+    font-size: 18px;
+}
+
+.filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filter-options label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #e1e5e9;
+}
+
+.filter-options label:hover {
+    background-color: #f8f9fa;
+    border-color: #0077b5;
+}
+
+.filter-options input[type="radio"] {
+    margin: 0;
+    accent-color: #0077b5;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-actions button {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#apply-filter {
+    background: linear-gradient(135deg, #0077b5 0%, #005885 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 119, 181, 0.3);
+}
+
+#apply-filter:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 119, 181, 0.4);
+}
+
+#clear-filter {
+    background: #f8f9fa;
+    color: #555;
+    border: 1px solid #e1e5e9;
+}
+
+#clear-filter:hover {
+    background: #e9ecef;
+    border-color: #0077b5;
+    color: #0077b5;
+}
+
+/* Filtered out connections */
+.filtered-out {
+    opacity: 0.3;
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+}
+
+/* Animation for panel */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #linkedin-filter-panel {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .filter-actions {
+        flex-direction: column;
+    }
+}
+
+/* LinkedIn page integration styles */
+.linkedin-filter-integration {
+    position: relative;
+}
+
+.linkedin-filter-integration::after {
+    content: '🔗 Filtered';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #0077b5;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    z-index: 1000;
+}
+
+/* Enhanced connection card styles */
+.connection-card-enhanced {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.connection-card-enhanced.verified {
+    border-color: #2ed573;
+    background: linear-gradient(135deg, rgba(46, 213, 115, 0.05) 0%, rgba(46, 213, 115, 0.02) 100%);
+}
+
+.connection-card-enhanced.unverified {
+    border-color: #ffa502;
+    background: linear-gradient(135deg, rgba(255, 165, 2, 0.05) 0%, rgba(255, 165, 2, 0.02) 100%);
+}
+
+.connection-card-enhanced::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    border-radius: 2px;
+}
+
+.connection-card-enhanced.verified::before {
+    background: linear-gradient(90deg, #2ed573 0%, #20bf6b 100%);
+}
+
+.connection-card-enhanced.unverified::before {
+    background: linear-gradient(90deg, #ffa502 0%, #ff9500 100%);
+}
+
+/* Status badges */
+.verification-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.verification-badge.verified {
+    background: #2ed573;
+    color: white;
+}
+
+.verification-badge.unverified {
+    background: #ffa502;
+    color: white;
+}
+
+/* Loading states */
+.filter-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.filter-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+

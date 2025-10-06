@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Connection Filter</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 LinkedIn Filter</h1>
+            <div class="status-indicator" id="statusIndicator">
+                <span class="status-dot"></span>
+                <span id="statusText">Inactive</span>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <!-- Filter Controls -->
+            <div class="section">
+                <h3>Connection Filter</h3>
+                <div class="filter-options">
+                    <label class="radio-option">
+                        <input type="radio" name="filterType" value="verified" id="verifiedOnly">
+                        <span class="radio-custom"></span>
+                        <span class="radio-label">Verified Users Only</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="filterType" value="unverified" id="unverifiedOnly">
+                        <span class="radio-custom"></span>
+                        <span class="radio-label">Unverified Users Only</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="filterType" value="all" id="showAll" checked>
+                        <span class="radio-custom"></span>
+                        <span class="radio-label">Show All</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Connection Invite Tools -->
+            <div class="section">
+                <h3>Send Connection Invite</h3>
+                <div class="invite-form">
+                    <div class="input-group">
+                        <label for="profileUrl">Profile URL:</label>
+                        <input type="url" id="profileUrl" placeholder="https://linkedin.com/in/username">
+                    </div>
+                    <div class="input-group">
+                        <label for="customMessage">Message:</label>
+                        <textarea id="customMessage" placeholder="Hi! I'd like to connect with you..." rows="3"></textarea>
+                    </div>
+                    <button id="sendInviteBtn" class="btn-primary">Send Invite</button>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="section">
+                <h3>Quick Actions</h3>
+                <div class="action-buttons">
+                    <button id="toggleFilter" class="btn-secondary">Toggle Filter</button>
+                    <button id="clearFilter" class="btn-secondary">Clear Filter</button>
+                    <button id="refreshPage" class="btn-secondary">Refresh Page</button>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="section">
+                <h3>Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalConnections">0</span>
+                        <span class="stat-label">Total Connections</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="verifiedConnections">0</span>
+                        <span class="stat-label">Verified</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="unverifiedConnections">0</span>
+                        <span class="stat-label">Unverified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="version">v1.0.0</div>
+            <div class="links">
+                <a href="#" id="helpLink">Help</a>
+                <a href="#" id="settingsLink">Settings</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
+

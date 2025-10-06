@@ -345,3 +345,5 @@ const styles = StyleSheet.create({
 
 export default CartScreen;
 
+
+
