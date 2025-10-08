@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookHub - Modern Book Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-book-open"></i>
+                <span>BookHub</span>
+            </div>
+            <div class="nav-search">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search for books, authors, genres...">
+                    <button class="search-btn">Search</button>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-btn" id="wishlistBtn">
+                    <i class="fas fa-heart"></i>
+                    <span class="badge" id="wishlistCount">0</span>
+                </button>
+                <button class="nav-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="badge" id="cartCount">0</span>
+                </button>
+                <button class="nav-btn" id="userBtn">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Discover Your Next <span class="gradient-text">Great Read</span></h1>
+            <p class="hero-subtitle">Explore thousands of books from bestselling authors and discover new worlds through literature</p>
+            <div class="hero-actions">
+                <button class="btn btn-primary">Browse Books</button>
+                <button class="btn btn-secondary">View Bestsellers</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="floating-books">
+                <div class="book book-1"></div>
+                <div class="book book-2"></div>
+                <div class="book book-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Browse by Category</h2>
+            <div class="category-grid">
+                <div class="category-card" data-category="fiction">
+                    <i class="fas fa-magic"></i>
+                    <h3>Fiction</h3>
+                    <p>Imaginative stories and novels</p>
+                </div>
+                <div class="category-card" data-category="non-fiction">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Non-Fiction</h3>
+                    <p>Educational and informative books</p>
+                </div>
+                <div class="category-card" data-category="mystery">
+                    <i class="fas fa-search"></i>
+                    <h3>Mystery</h3>
+                    <p>Thrilling detective stories</p>
+                </div>
+                <div class="category-card" data-category="romance">
+                    <i class="fas fa-heart"></i>
+                    <h3>Romance</h3>
+                    <p>Love stories and relationships</p>
+                </div>
+                <div class="category-card" data-category="sci-fi">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Science Fiction</h3>
+                    <p>Futuristic and space adventures</p>
+                </div>
+                <div class="category-card" data-category="biography">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Biography</h3>
+                    <p>Life stories of remarkable people</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <label>Sort by:</label>
+                    <select id="sortSelect">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="popular">Most Popular</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Price Range:</label>
+                    <div class="price-range">
+                        <input type="range" id="priceRange" min="0" max="1000" value="1000">
+                        <span id="priceValue">K 1,000</span>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label>Genre:</label>
+                    <select id="genreSelect">
+                        <option value="">All Genres</option>
+                        <option value="fiction">Fiction</option>
+                        <option value="non-fiction">Non-Fiction</option>
+                        <option value="mystery">Mystery</option>
+                        <option value="romance">Romance</option>
+                        <option value="sci-fi">Science Fiction</option>
+                        <option value="biography">Biography</option>
+                    </select>
+                </div>
+                <button class="btn btn-outline" id="clearFilters">Clear Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Grid -->
+    <section class="books-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Books</h2>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="books-grid" id="booksGrid">
+                <!-- Books will be dynamically loaded here -->
+            </div>
+            <div class="load-more">
+                <button class="btn btn-primary" id="loadMoreBtn">Load More Books</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated with New Releases</h2>
+                <p>Get notified about the latest books, exclusive deals, and author events</p>
+                <div class="newsletter-form">
+                    <input type="email" placeholder="Enter your email address">
+                    <button class="btn btn-primary">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BookHub</h3>
+                    <p>Your ultimate destination for discovering and purchasing books online. We offer a wide selection of books across all genres.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul>
+                        <li><a href="#">Fiction</a></li>
+                        <li><a href="#">Non-Fiction</a></li>
+                        <li><a href="#">Mystery</a></li>
+                        <li><a href="#">Romance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> +260 97 123 4567</p>
+                        <p><i class="fas fa-envelope"></i> info@bookhub.co.zm</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Lusaka, Zambia</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BookHub. All rights reserved. | Currency: Zambian Kwacha (ZMW)</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <button class="close-btn" id="closeCart">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be loaded here -->
+                </div>
+                <div class="cart-summary">
+                    <div class="cart-total">
+                        <span>Total: </span>
+                        <span id="cartTotal">K 0.00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="clearCart">Clear Cart</button>
+                <button class="btn btn-primary" id="checkout">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div class="modal" id="wishlistModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>My Wishlist</h3>
+                <button class="close-btn" id="closeWishlist">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="wishlist-items" id="wishlistItems">
+                    <!-- Wishlist items will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Book Details Modal -->
+    <div class="modal" id="bookModal">
+        <div class="modal-content book-modal">
+            <div class="modal-header">
+                <h3 id="bookTitle">Book Title</h3>
+                <button class="close-btn" id="closeBook">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="book-details">
+                    <div class="book-image">
+                        <img id="bookImage" src="" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <div class="book-rating">
+                            <div class="stars" id="bookStars"></div>
+                            <span id="bookRating">4.5</span>
+                        </div>
+                        <p class="book-description" id="bookDescription"></p>
+                        <div class="book-meta">
+                            <p><strong>Author:</strong> <span id="bookAuthor"></span></p>
+                            <p><strong>Genre:</strong> <span id="bookGenre"></span></p>
+                            <p><strong>Pages:</strong> <span id="bookPages"></span></p>
+                            <p><strong>Published:</strong> <span id="bookPublished"></span></p>
+                        </div>
+                        <div class="book-price">
+                            <span class="price" id="bookPrice">K 0.00</span>
+                            <span class="original-price" id="bookOriginalPrice"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="addToWishlist">Add to Wishlist</button>
+                <button class="btn btn-primary" id="addToCart">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
